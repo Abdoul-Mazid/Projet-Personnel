@@ -145,7 +145,8 @@ class Acceuil extends StatelessWidget {
           children: [
             IconButton(onPressed: () {}, icon: const Icon(Icons.home)),
             IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
+            IconButton(onPressed: () {Navigator.pushNamed(context,'/shopping');}, 
+            icon: const Icon(Icons.shopping_cart)),
             // Navigation vers la page de connexion
             IconButton(
               onPressed: () {

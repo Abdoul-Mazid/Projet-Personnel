@@ -3,6 +3,7 @@ import 'package:flutter_application_1/Acceuil.dart';
 import 'package:flutter_application_1/InscriptionPage.dart';
 import 'package:flutter_application_1/Parametre.dart';
 import 'package:flutter_application_1/LoginPage.dart';
+import 'package:flutter_application_1/ShoppingPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => Acceuil(),
         '/login': (context) => LoginPage(),
-        '/register': (context) =>InscriptionPage(), // Ajouter cette ligne
+        '/register': (context) =>InscriptionPage(),
+        '/shopping':(context) =>ShoppingPage() // Ajouter cette ligne
       },
       home: Acceuil(),
     );

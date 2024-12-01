@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/LoginPage.dart'; // Assurez-vous que le chemin d'import est correct.
+import 'package:flutter_application_1/Parametre.dart';
 import 'package:marquee/marquee.dart';  // Assure-toi d'avoir bien ajouté ce package
 
 class Acceuil extends StatelessWidget {
@@ -8,14 +9,14 @@ class Acceuil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> categories = [
-      {'color': Colors.white, 'text': 'Montre', 'image': 'image/1.jpg'},
-      {'color': Colors.white, 'text': 'Chaussure', 'image': 'image/2.png'},
-      {'color': Colors.white, 'text': 'Pantalon', 'image': 'image/3.jpg'},
-      {'color': Colors.white, 'text': 'Chemise', 'image': 'image/4.jpg'},
-      {'color': Colors.white, 'text': 'Voiture', 'image': 'image/5.jpg'},
-      {'color': Colors.white, 'text': 'Perruque', 'image': 'image/6.jpg'}, 
-      {'color': Colors.white, 'text': 'Ceinture', 'image': 'image/7.jpg'},
-      {'color': Colors.white, 'text': 'Ordinateur', 'image': 'image/8.jpg'},
+      {'color': Colors.white, 'text': 'Montre', 'image': 'assets/image/1.jpg'},
+      {'color': Colors.white, 'text': 'Chaussure', 'image': 'assets/image/2.png'},
+      {'color': Colors.white, 'text': 'Pantalon', 'image': 'assets/image/3.jpg'},
+      {'color': Colors.white, 'text': 'Chemise', 'image': 'assets/image/4.jpg'},
+      {'color': Colors.white, 'text': 'Voiture', 'image': 'assets/image/5.jpg'},
+      {'color': Colors.white, 'text': 'Perruque', 'image': 'assets/image/6.jpg'}, 
+      {'color': Colors.white, 'text': 'Ceinture', 'image': 'assets/image/7.jpg'},
+      {'color': Colors.white, 'text': 'Ordinateur', 'image': 'assets/image/8.jpg'},
     ];
 
     return Scaffold(
@@ -24,7 +25,10 @@ class Acceuil extends StatelessWidget {
         backgroundColor: Colors.blue,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+              MaterialPageRoute(builder: (context) => Parametre()),
+            );},
             icon: const Icon(Icons.settings),
           ),
         ],
@@ -60,65 +64,71 @@ class Acceuil extends StatelessWidget {
                   child: SizedBox(
                     width: cardWidth,
                     height: 150,
-                    child: Card(
-                      color: category['color'],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 4,
-                      child: Row(
-                        children: [
-                          // Texte défilant à gauche
-                          Expanded(
-                            flex: 2,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                              child: Marquee(
-                                text: category['text'],
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                    child: InkWell(
+                      onTap: () {
+                        // Action à effectuer lors du tap sur la carte
+                        _onCategoryTap(context, category['text']);
+                      },
+                      child: Card(
+                        color: category['color'],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 4,
+                        child: Row(
+                          children: [
+                            // Texte défilant à gauche
+                            Expanded(
+                              flex: 2,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                child: Marquee(
+                                  text: category['text'],
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                  scrollAxis: Axis.horizontal, // Défilement horizontal
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  blankSpace: 20.0, // Espace entre chaque répétition
+                                  velocity: 30.0, // Vitesse du défilement
+                                  pauseAfterRound: Duration(seconds: 1), // Pause entre deux défilements
+                                  startPadding: 10.0,
+                                  accelerationDuration: Duration(seconds: 1),
+                                  accelerationCurve: Curves.linear,
+                                  decelerationDuration: Duration(milliseconds: 500),
+                                  decelerationCurve: Curves.easeOut,
                                 ),
-                                scrollAxis: Axis.horizontal, // Défilement horizontal
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                blankSpace: 20.0, // Espace entre chaque répétition
-                                velocity: 30.0, // Vitesse du défilement
-                                pauseAfterRound: Duration(seconds: 1), // Pause entre deux défilements
-                                startPadding: 10.0,
-                                accelerationDuration: Duration(seconds: 1),
-                                accelerationCurve: Curves.linear,
-                                decelerationDuration: Duration(milliseconds: 500),
-                                decelerationCurve: Curves.easeOut,
                               ),
                             ),
-                          ),
-                          // Image à droite
-                          Expanded(
-                            flex: 3,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                              ),
-                              child: category['image'] != null
-                                  ? Image.asset(
-                                      category['image'],
-                                      fit: BoxFit.cover,
-                                      errorBuilder: (context, error, stackTrace) => const Icon(
-                                        Icons.broken_image,
-                                        color: Colors.grey,
+                            // Image à droite
+                            Expanded(
+                              flex: 3,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                ),
+                                child: category['image'] != null
+                                    ? Image.asset(
+                                        category['image'],
+                                        fit: BoxFit.cover,
+                                        errorBuilder: (context, error, stackTrace) => const Icon(
+                                          Icons.broken_image,
+                                          color: Colors.grey,
+                                          size: 50,
+                                        ),
+                                      )
+                                    : const Icon(
+                                        Icons.image_not_supported,
                                         size: 50,
+                                        color: Colors.grey,
                                       ),
-                                    )
-                                  : const Icon(
-                                      Icons.image_not_supported,
-                                      size: 50,
-                                      color: Colors.grey,
-                                    ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -128,27 +138,27 @@ class Acceuil extends StatelessWidget {
           ),
         ],
       ),
-          bottomNavigationBar: BottomAppBar(
-      color: Colors.green,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.home)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
-          // Navigation vers la page de connexion
-          IconButton(
-            onPressed: () {
-              // Utilisation de la route nommée pour aller à la page de connexion
-              Navigator.pushNamed(context, '/login'); // Assurez-vous que '/login' est bien défini dans routes
-            },
-            icon: const Icon(Icons.account_circle),
-          ),
-        ],
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.green,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.home)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.shopping_cart)),
+            // Navigation vers la page de connexion
+            IconButton(
+              onPressed: () {
+                // Utilisation de la route nommée pour aller à la page de connexion
+                Navigator.pushNamed(context, '/login'); // Assurez-vous que '/login' est bien défini dans routes
+              },
+              icon: const Icon(Icons.account_circle),
+            ),
+          ],
+        ),
       ),
-    ),
     );
-   }
+  }
 
   // Fonction pour adapter la largeur des cartes en fonction de la taille de l'écran
   double _getCardWidth(BuildContext context) {
@@ -161,5 +171,14 @@ class Acceuil extends StatelessWidget {
     } else {
       return 170; // Pour les grands écrans (ex. tablettes en mode paysage, ordinateurs)
     }
+  }
+
+  // Fonction qui se déclenche lors du tap sur une carte
+  void _onCategoryTap(BuildContext context, String category) {
+    // Affiche une alerte, mais vous pouvez personnaliser l'action
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Vous avez sélectionné la catégorie $category')),
+    );
+    // Vous pouvez rediriger vers une autre page ou effectuer une autre action
   }
 }
